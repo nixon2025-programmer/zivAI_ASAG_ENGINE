@@ -1,0 +1,42 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data indexes (rebuildable)
+data/indexes/
+
+# Processed data (optional)
+data/processed/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MindSpore lab venv (if separate)
+mindspore_lab/.venv/
