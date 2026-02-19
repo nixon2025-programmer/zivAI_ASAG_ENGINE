@@ -1,3 +1,4 @@
+
 import os
 import glob
 import argparse
@@ -10,13 +11,29 @@ from asag_engine.ingest.chunking import chunk_docs
 
 log = logging.getLogger("asag.ingest")
 
+
+def _paper_id_from_filename(file_path: str) -> str:
+    base = os.path.basename(file_path).lower()
+    base = base.replace(".pdf", "")
+    parts = base.split("-")
+
+    if parts and parts[0].isdigit():
+        parts = parts[1:]
+
+    if len(parts) >= 2 and parts[-2:] == ["mark", "scheme"]:
+        parts = parts[:-2]
+
+    return "-".join(parts)
+
+
 def _infer_metadata(file_path: str, doc_type: str) -> Dict[str, Any]:
-    # Very simple metadata parser: extend later (year, paper, q numbers).
     base = os.path.basename(file_path)
     return {
         "source_file": base,
-        "doc_type": doc_type,  # "exam" or "markscheme"
+        "paper_id": _paper_id_from_filename(file_path),
+        "doc_type": doc_type,
     }
+
 
 def _dump_jsonl(path: str, records: List[Dict[str, Any]]) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -24,6 +41,7 @@ def _dump_jsonl(path: str, records: List[Dict[str, Any]]) -> None:
         for r in records:
             f.write(orjson.dumps(r))
             f.write(b"\n")
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -46,10 +64,7 @@ def main():
         chunks = chunk_docs(docs)
         meta = _infer_metadata(p, "exam")
         for c in chunks:
-            exams_records.append({
-                "text": c.page_content,
-                "metadata": {**meta, **(c.metadata or {})},
-            })
+            exams_records.append({"text": c.page_content, "metadata": {**meta, **(c.metadata or {})}})
         log.info(f"Ingested exam: {p} -> {len(chunks)} chunks")
 
     for p in ms_paths:
@@ -57,10 +72,7 @@ def main():
         chunks = chunk_docs(docs)
         meta = _infer_metadata(p, "markscheme")
         for c in chunks:
-            ms_records.append({
-                "text": c.page_content,
-                "metadata": {**meta, **(c.metadata or {})},
-            })
+            ms_records.append({"text": c.page_content, "metadata": {**meta, **(c.metadata or {})}})
         log.info(f"Ingested markscheme: {p} -> {len(chunks)} chunks")
 
     _dump_jsonl(exams_out, exams_records)
@@ -68,6 +80,7 @@ def main():
 
     log.info(f"Wrote: {exams_out} ({len(exams_records)} records)")
     log.info(f"Wrote: {ms_out} ({len(ms_records)} records)")
+
 
 if __name__ == "__main__":
     main()
