@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field, model_validator, ConfigDict
 
@@ -70,5 +69,4 @@ class GradeResult(BaseModel):
         elif self.score_awarded == 0:
             self.feedback_short = "Incorrect."
             self.is_correct = False
-
         return self

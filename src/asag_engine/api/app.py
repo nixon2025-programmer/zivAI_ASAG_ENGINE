@@ -1,17 +1,29 @@
+# src/asag_engine/api/app.py
 from flask import Flask
+
 from asag_engine.config import settings
 from asag_engine.logging_setup import setup_logging
-from asag_engine.api.routes import bp
+from asag_engine.api.routes import bp as grading_bp
+from asag_engine.api.zivai_teacher_routes import bp_teacher
+
 
 def create_app() -> Flask:
     setup_logging()
     app = Flask(__name__)
-    app.register_blueprint(bp)
+
+    # Existing ASAG grading API
+    app.register_blueprint(grading_bp)
+
+    # New teacher assessments API
+    app.register_blueprint(bp_teacher)
+
     return app
+
 
 def main():
     app = create_app()
     app.run(host=settings.host, port=settings.port, debug=(settings.env == "dev"))
+
 
 if __name__ == "__main__":
     main()
