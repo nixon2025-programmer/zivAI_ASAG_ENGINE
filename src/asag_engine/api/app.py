@@ -1,10 +1,12 @@
-# src/asag_engine/api/app.py
 from flask import Flask
 
 from asag_engine.config import settings
 from asag_engine.logging_setup import setup_logging
 from asag_engine.api.routes import bp as grading_bp
 from asag_engine.api.zivai_teacher_routes import bp_teacher
+
+from asag_engine.api.zivai_content_routes import bp_zivai_content
+
 
 
 def create_app() -> Flask:
@@ -16,6 +18,9 @@ def create_app() -> Flask:
 
     # New teacher assessments API
     app.register_blueprint(bp_teacher)
+
+    # New content generation API
+    app.register_blueprint(bp_zivai_content)
 
     return app
 
