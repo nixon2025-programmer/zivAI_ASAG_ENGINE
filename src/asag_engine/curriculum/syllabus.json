@@ -1,0 +1,325 @@
+{
+  "syllabus_name": "Zimbabwe Mathematics Syllabus Forms 1-4 (2015-2022)",
+  "country": "Zimbabwe",
+  "level": "Forms 1-4 (O-Level)",
+  "topics": [
+    {
+      "topic_code": "RN",
+      "topic_name": "Real Numbers",
+      "forms": {
+        "Form1": [
+          "Number types",
+          "Factors and multiples",
+          "Directed numbers",
+          "Fractions and percentages",
+          "Order of operations",
+          "Approximations and estimations",
+          "Ratios",
+          "Large and small numbers",
+          "Number bases",
+          "Scale measurement"
+        ],
+        "Form2": [
+          "Squares and square roots",
+          "Cubes and cube roots",
+          "Significant figures",
+          "Proportions",
+          "Standard form",
+          "Scale drawings"
+        ],
+        "Form3": [
+          "Irrational numbers",
+          "Number patterns",
+          "Operations in standard form",
+          "Operations in number bases",
+          "Scale factor",
+          "Area factor"
+        ],
+        "Form4": []
+      }
+    },
+    {
+      "topic_code": "SETS",
+      "topic_name": "Sets",
+      "forms": {
+        "Form1": [
+          "Set notation",
+          "Types of sets",
+          "Union and intersection"
+        ],
+        "Form2": [
+          "Venn diagrams (2 subsets)"
+        ],
+        "Form3": [
+          "Set builder notation",
+          "Venn diagrams (3 subsets)"
+        ],
+        "Form4": []
+      }
+    },
+    {
+      "topic_code": "FM",
+      "topic_name": "Financial Mathematics",
+      "forms": {
+        "Form1": [
+          "Household bills",
+          "Profit and loss",
+          "Discount",
+          "Household budgets"
+        ],
+        "Form2": [
+          "Corporate bills",
+          "Simple interest",
+          "Hire purchase",
+          "Enterprise budgets"
+        ],
+        "Form3": [
+          "Compound interest",
+          "Commission",
+          "Bank statements"
+        ],
+        "Form4": [
+          "Foreign exchange",
+          "PAYE",
+          "VAT",
+          "Customs and Excise Duty"
+        ]
+      }
+    },
+    {
+      "topic_code": "MM",
+      "topic_name": "Measures and Mensuration",
+      "forms": {
+        "Form1": [
+          "Units of time, mass, length, temperature, capacity",
+          "Perimeter of plane shapes",
+          "Area of plane shapes"
+        ],
+        "Form2": [
+          "Area and volume units",
+          "Volume of cuboids",
+          "Density of cuboids"
+        ],
+        "Form3": [
+          "Combined shapes",
+          "Volume of cylinders"
+        ],
+        "Form4": [
+          "Surface area",
+          "Volumes of solid shapes",
+          "Density"
+        ]
+      }
+    },
+    {
+      "topic_code": "GR",
+      "topic_name": "Graphs",
+      "forms": {
+        "Form1": [
+          "Cartesian plane",
+          "Coordinates",
+          "Distance-time graphs"
+        ],
+        "Form2": [
+          "Linear graphs",
+          "Table of values"
+        ],
+        "Form3": [
+          "Quadratic graphs",
+          "Cubic graphs",
+          "Inverse graphs"
+        ],
+        "Form4": [
+          "Speed-time graphs",
+          "Velocity-time graphs"
+        ]
+      }
+    },
+    {
+      "topic_code": "VAR",
+      "topic_name": "Variation",
+      "forms": {
+        "Form1": [
+          "Direct variation"
+        ],
+        "Form2": [
+          "Direct and inverse variation"
+        ],
+        "Form3": [
+          "Joint variation"
+        ],
+        "Form4": [
+          "Partial variation"
+        ]
+      }
+    },
+    {
+      "topic_code": "ALG",
+      "topic_name": "Algebra",
+      "forms": {
+        "Form1": [
+          "Algebraic expressions",
+          "Linear equations",
+          "Inequalities",
+          "Index form"
+        ],
+        "Form2": [
+          "Factorisation",
+          "Quadratic expressions",
+          "Simultaneous equations",
+          "Laws of indices"
+        ],
+        "Form3": [
+          "Algebraic fractions",
+          "Change of subject",
+          "Quadratic equations"
+        ],
+        "Form4": [
+          "Completing the square",
+          "Quadratic formula",
+          "Linear programming",
+          "Logarithms"
+        ]
+      }
+    },
+    {
+      "topic_code": "GEO",
+      "topic_name": "Geometry",
+      "forms": {
+        "Form1": [
+          "Points, lines and angles",
+          "Polygons",
+          "Circle basics",
+          "Construction"
+        ],
+        "Form2": [
+          "Bearings",
+          "Congruency",
+          "Similarity"
+        ],
+        "Form3": [
+          "Circle theorems",
+          "Angles of elevation and depression"
+        ],
+        "Form4": [
+          "Scale factor in similar solids",
+          "Volume and mass of similar solids"
+        ]
+      }
+    },
+    {
+      "topic_code": "STAT",
+      "topic_name": "Statistics",
+      "forms": {
+        "Form1": [
+          "Data collection",
+          "Frequency tables",
+          "Bar charts",
+          "Pie charts"
+        ],
+        "Form2": [
+          "Grouped data",
+          "Mean, median, mode"
+        ],
+        "Form3": [
+          "Cumulative frequency",
+          "Frequency polygons"
+        ],
+        "Form4": [
+          "Quartiles",
+          "Interquartile range"
+        ]
+      }
+    },
+    {
+      "topic_code": "TRIG",
+      "topic_name": "Trigonometry",
+      "forms": {
+        "Form2": [
+          "Pythagoras theorem"
+        ],
+        "Form3": [
+          "Sine, cosine, tangent (acute angles)"
+        ],
+        "Form4": [
+          "Sine rule",
+          "Cosine rule",
+          "Area of triangle"
+        ]
+      }
+    },
+    {
+      "topic_code": "VEC",
+      "topic_name": "Vectors",
+      "forms": {
+        "Form2": [
+          "Vector notation",
+          "Addition and subtraction"
+        ],
+        "Form3": [
+          "Scalar multiplication",
+          "Magnitude"
+        ],
+        "Form4": [
+          "Combined vector operations"
+        ]
+      }
+    },
+    {
+      "topic_code": "MAT",
+      "topic_name": "Matrices",
+      "forms": {
+        "Form2": [
+          "Order of matrices",
+          "Types of matrices"
+        ],
+        "Form3": [
+          "Matrix operations"
+        ],
+        "Form4": [
+          "Determinants",
+          "Inverse matrix",
+          "Simultaneous equations"
+        ]
+      }
+    },
+    {
+      "topic_code": "TRANS",
+      "topic_name": "Transformation",
+      "forms": {
+        "Form1": [
+          "Translation"
+        ],
+        "Form2": [
+          "Reflection"
+        ],
+        "Form3": [
+          "Rotation",
+          "Enlargement"
+        ],
+        "Form4": [
+          "Stretch",
+          "Shear"
+        ]
+      }
+    },
+    {
+      "topic_code": "PROB",
+      "topic_name": "Probability",
+      "forms": {
+        "Form2": [
+          "Experimental probability"
+        ],
+        "Form3": [
+          "Theoretical probability",
+          "Outcome tables"
+        ],
+        "Form4": [
+          "Tree diagrams",
+          "Probability rules",
+          "Application of probability"
+        ]
+      }
+    }
+  ]
+}
