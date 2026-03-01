@@ -8,6 +8,7 @@ from asag_engine.api.zivai_teacher_routes import bp_teacher
 from asag_engine.api.zivai_content_routes import bp_zivai_content
 from asag_engine.api.analytics_routes import bp as analytics_bp
 from asag_engine.api.learning_plan_routes import bp_learning
+from asag_engine.api.tutor_routes import bp_tutor
 
 
 def create_app() -> Flask:
@@ -26,6 +27,8 @@ def create_app() -> Flask:
     app.register_blueprint(analytics_bp)
 
     app.register_blueprint(bp_learning)
+
+    app.register_blueprint(bp_tutor)
 
     return app
 
