@@ -71,6 +71,9 @@ class GradeResult(BaseModel):
     curriculum_alignment: Optional[CurriculumAlignment] = None
     coverage_analysis: List[CoverageGap] = Field(default_factory=list)
 
+    performance_insight: Optional[StudentPerformanceInsight] = None
+
+
     @model_validator(mode="after")
     def validate_bounds(self):
         if self.score_awarded > self.max_score:
@@ -111,3 +114,30 @@ class GradeResult(BaseModel):
             self.is_correct = False
 
         return self
+
+class Misconception(BaseModel):
+        topic_code: Optional[str] = None
+        description: str
+        frequency: Optional[int] = None
+        severity: Optional[str] = None  # low / medium / high
+
+class MasteryLevel(BaseModel):
+        topic_code: Optional[str] = None
+        topic_name: Optional[str] = None
+        mastery_percent: float = Field(..., ge=0, le=100)
+        risk_level: Optional[str] = None  # low / medium / high
+
+class InterventionRecommendation(BaseModel):
+        topic_code: Optional[str] = None
+        recommendation: str
+        priority: Optional[str] = None  # low / medium / high
+
+class StudentPerformanceInsight(BaseModel):
+        student_id: Optional[str] = None
+        class_id: Optional[str] = None
+
+        overall_average: float = Field(..., ge=0, le=100)
+
+        mastery_by_topic: List[MasteryLevel] = Field(default_factory=list)
+        detected_misconceptions: List[Misconception] = Field(default_factory=list)
+        recommended_interventions: List[InterventionRecommendation] = Field(default_factory=list)

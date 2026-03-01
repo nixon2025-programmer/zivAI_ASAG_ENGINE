@@ -6,6 +6,7 @@ from asag_engine.api.routes import bp as grading_bp
 from asag_engine.api.zivai_teacher_routes import bp_teacher
 
 from asag_engine.api.zivai_content_routes import bp_zivai_content
+from asag_engine.api.analytics_routes import bp as analytics_bp
 
 
 
@@ -22,6 +23,8 @@ def create_app() -> Flask:
     # New content generation API
     app.register_blueprint(bp_zivai_content)
 
+    app.register_blueprint(analytics_bp)
+
     return app
 
 
@@ -32,3 +35,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
