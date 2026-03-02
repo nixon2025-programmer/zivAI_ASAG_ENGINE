@@ -35,11 +35,11 @@ def _load_and_chunk_pdf(path: str) -> List[Document]:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Build content_faiss index from syllabus/textbooks PDFs.")
+    parser = argparse.ArgumentParser(description="Build content_faiss index from pdfs/textbooks PDFs.")
     parser.add_argument(
         "--content_dir",
         required=True,
-        help="Directory containing PDF files (syllabus/textbooks). Example: data/raw/content",
+        help="Directory containing PDF files (pdfs/textbooks). Example: data/raw/content",
     )
     parser.add_argument(
         "--out_dir",

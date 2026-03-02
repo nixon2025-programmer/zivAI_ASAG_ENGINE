@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import List, Dict
 
 BASE_DIR = Path(__file__).resolve().parent
-SYLLABUS_PATH = BASE_DIR / "syllabus.json"
+SYLLABUS_PATH = BASE_DIR / "pdfs.json"
 OUTPUT_PATH = BASE_DIR / "syllabus_chunks.json"
 
 
@@ -49,7 +49,7 @@ def save_chunks(chunks: List[Dict]):
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(chunks, f, indent=2)
 
-    print(f"✅ Saved {len(chunks)} syllabus chunks to {OUTPUT_PATH}")
+    print(f"✅ Saved {len(chunks)} pdfs chunks to {OUTPUT_PATH}")
 
 
 def main():

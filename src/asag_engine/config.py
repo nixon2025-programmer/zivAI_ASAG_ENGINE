@@ -124,9 +124,9 @@ def load_settings() -> Settings:
         60
     )
 
-    # -------------------------------
+
     # Retrieval tuning
-    # -------------------------------
+
     top_k_markscheme = _safe_int(
         os.getenv("TOP_K_MARKSCHEME", "6"),
         6
