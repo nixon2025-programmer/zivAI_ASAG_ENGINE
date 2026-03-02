@@ -1,282 +1,431 @@
-# zivAI_ASAG_ENGINE
-# ASAG Engine (Local RAG + Ollama)
+# ASAG Engine  
+AI-Powered Adaptive Student Assessment & Generation System
 
-Production-ready **Automatic Short Answer Grading (ASAG)** engine built using:
+An intelligent academic backend powering:
 
-- LangChain
-- Ollama (local LLM)
-- FAISS vector search
-- Marking-scheme-first retrieval
-- Strict JSON scoring (Pydantic validated)
-- Flask API (Postman testable)
-
-This system runs fully locally and keeps **MindSpore separate** for later training experiments.
+- Student Tutor Agent  
+- Resource Intelligence (MindOCR + FAISS + PostgreSQL)  
+- Classroom Copilot (Teacher Workflow)  
+- Analytics & Learning Plans  
+- AI-Assisted Grading  
 
 ---
 
-# Architecture Overview
+## Overview
 
-## Runtime Engine (Production)
+ASAG Engine is a modular AI academic backend built with:
 
-PDFs → Chunking → Embeddings (Ollama)  
-        ↓  
-   FAISS Indexes  
-        ↓  
-Dual Retrieval:
-  1) Marking scheme (priority)
-  2) Past exam questions (support)
-        ↓  
-LLM (Ollama chat model)
-        ↓  
-Strict JSON Grading Output
-        ↓  
-Flask API
+- Flask API  
+- PostgreSQL  
+- FAISS (Vector Search)  
+- Sentence Transformers  
+- MindOCR (for scanned PDFs & images)  
+- Ollama (LLM generation)  
 
----
+It enables:
 
-## Research Layer (Optional)
-
-mindspore_lab/
-(separate virtual environment)
-
-
-MindSpore is not required for the runtime engine.
+- Uploading and indexing school materials  
+- Retrieving relevant snippets with citations  
+- AI-powered tutoring  
+- AI-generated assessments  
+- Learning plan generation  
+- Classroom content drafting and editing  
 
 ---
 
-# Project Structure
+## Project Structure
+
+```
 
 asag-engine/
-├── data/
-│ ├── raw/
-│ │ ├── exams/
-│ │ └── markschemes/
-│ ├── processed/
-│ └── indexes/
-│ ├── exams_faiss/
-│ └── markschemes_faiss/
 │
 ├── src/
-│ └── asag_engine/
-│ ├── ingest/
-│ ├── index/
-│ ├── rag/
-│ ├── grading/
-│ └── api/
+│   └── asag_engine/
+│       ├── api/
+│       │   ├── app.py
+│       │   ├── resource_routes.py
+│       │   ├── tutor_routes.py
+│       │   ├── copilot_routes.py
+│       │   └── learning_plan_routes.py
+│       │
+│       ├── resource_intelligence/
+│       │   ├── service.py
+│       │   ├── chunking.py
+│       │   ├── embeddings.py
+│       │   ├── faiss_index.py
+│       │   ├── models.py
+│       │   └── extractors/
+│       │       ├── pdf_extractor.py
+│       │       ├── docx_extractor.py
+│       │       ├── image_extractor.py
+│       │       └── mindocr_runner.py
+│       │
+│       ├── tutor_agent/
+│       ├── classroom_copilot/
+│       ├── learning_plans/
+│       ├── analytics/
+│       └── config.py
 │
-├── mindspore_lab/
+├── data/
+│   ├── indexes/resources_faiss/
+│   └── raw/
+│
 ├── requirements.txt
-├── pyproject.toml
 └── README.md
 
+```
 
 ---
 
-# System Requirements
+## Core Modules
 
-- Windows + WSL2 (recommended)
-- Python 3.10+
-- Ollama installed on Windows
-- Minimum 4GB RAM (8GB recommended)
-- Internet only needed to download models
+### 1. Resource Intelligence
+
+Extracts text from:
+
+- PDF (text via PyMuPDF)  
+- Scanned PDFs / Images (via MindOCR)  
+- DOCX (python-docx)  
+
+Pipeline:
+
+1. Upload  
+2. Extract  
+3. Chunk  
+4. Embed (Sentence Transformers)  
+5. Index (FAISS)  
+6. Store metadata (PostgreSQL)  
+
+Search Flow:
+
+1. Query  
+2. FAISS similarity search  
+3. Retrieve relevant chunks  
+4. Return snippet with citation (including page numbers)  
+
+This enables grounded responses and traceable academic references.
 
 ---
 
-# Step 1 — Install Ollama (Windows)
+### 2. Student Tutor Agent
 
-Download from:
+Flow:
 
-https://ollama.com
+Student Question  
+→ Query FAISS  
+→ Retrieve Relevant Snippets  
+→ Send Snippet + Question to Ollama  
+→ Generate Explanation with Citation  
 
-Verify installation:
+Benefits:
 
-```powershell
-ollama ls
-Pull required models:
+- Grounded responses  
+- Reduced hallucination  
+- Step-by-step explanations  
+- Context-aware tutoring  
 
-ollama pull llama3:3b
-ollama pull nomic-embed-text
-If your RAM is limited, use:
+---
 
-ollama pull phi3:mini
-Step 2 — Allow WSL to Access Ollama
-From WSL:
+### 3. Classroom Copilot
 
-WIN_HOST=$(grep -m1 nameserver /etc/resolv.conf | awk '{print $2}')
-curl http://$WIN_HOST:11434/api/tags
-If JSON returns, use that IP in your .env.
+Designed for teachers.
 
-If blocked, allow firewall access in Windows:
+Capabilities:
 
-New-NetFirewallRule -DisplayName "Ollama 11434" -Direction Inbound -Protocol TCP -LocalPort 11434 -Action Allow
-Step 3 — Setup Python Environment
-cd ~/asag-engine
-/usr/bin/python3 -m venv .venv
+- Generate assessments  
+- Edit existing drafts  
+- Use uploaded school materials as context  
+- Save and refine drafts  
+
+Endpoints:
+
+- `POST /api/v1/copilot/generate`
+- `POST /api/v1/copilot/edit`
+
+---
+
+### 4. Learning Plans
+
+- Weak topic detection  
+- Mastery tracking  
+- AI-driven practice generation  
+- Student-specific adaptive plans  
+
+---
+
+## API Endpoints
+
+### System
+
+- `GET /health`  
+- `GET /static/<path:filename>`
+
+### Grading
+
+- `POST /api/v1/grade`
+
+### Analytics
+
+- `GET /api/v1/analytics/student/<student_id>`
+
+### Learning Plans
+
+- `POST /api/v1/learning-plans/student/<student_id>`
+
+### Tutor Agent
+
+- `POST /api/v1/tutor/student/<student_id>`
+
+### Resource Intelligence
+
+- `POST /api/v1/resources/upload`
+- `POST /api/v1/resources/search`
+
+### Classroom Copilot
+
+- `POST /api/v1/copilot/generate`
+- `POST /api/v1/copilot/edit`
+
+---
+
+## How to Run on a New PC
+
+### 1. Install Python (3.10+)
+
+Verify:
+
+```
+
+python --version
+
+```
+
+---
+
+### 2. Clone the Repository
+
+```
+
+git clone [https://github.com/yourusername/asag-engine.git](https://github.com/yourusername/asag-engine.git)
+cd asag-engine
+
+```
+
+---
+
+### 3. Create Virtual Environment
+
+Linux / Mac:
+
+```
+
+python -m venv .venv
 source .venv/bin/activate
-pip install -U pip setuptools wheel
+
+```
+
+Windows:
+
+```
+
+python -m venv .venv
+.venv\Scripts\activate
+
+```
+
+---
+
+### 4. Install Requirements
+
+```
+
 pip install -r requirements.txt
+
+```
+
+---
+
+### 5. Install and Run Ollama
+
+Install Ollama:
+
+https://ollama.ai
+
+Start server:
+
+```
+
+ollama serve
+
+```
+
+Pull model:
+
+```
+
+ollama pull llama3.2:1b
+
+```
+
+---
+
+### 6. Install MindOCR
+
+```
+
+git clone [https://github.com/mindspore-lab/mindocr.git](https://github.com/mindspore-lab/mindocr.git)
+cd mindocr
 pip install -e .
-Verify:
 
-which python
-It should point to:
+```
 
-~/asag-engine/.venv/bin/python
-Step 4 — Configure .env
-Create a .env file in project root:
+Set environment variable:
 
-HOST=127.0.0.1
-PORT=8000
+Linux / Mac:
 
-OLLAMA_BASE_URL=http://<WINDOWS_IP>:11434
-OLLAMA_CHAT_MODEL=llama3:3b
-OLLAMA_EMBED_MODEL=nomic-embed-text:latest
+```
 
-TOP_K_MARKSCHEME=3
-TOP_K_EXAMS=2
+export MINDOCR_HOME=~/mindocr
 
-DATA_DIR=data
-INDEX_DIR=data/indexes
-Replace <WINDOWS_IP> using:
+```
 
-grep -m1 nameserver /etc/resolv.conf | awk '{print $2}'
-Step 5 — Add PDFs
-Place files in:
+Windows:
 
-data/raw/exams/
-data/raw/markschemes/
-Step 6 — Ingest PDFs
-python -m asag_engine.ingest.ingest_cli \
-  --exams_dir data/raw/exams \
-  --markschemes_dir data/raw/markschemes
-This generates:
+```
 
-data/processed/exams.jsonl
-data/processed/markschemes.jsonl
-Step 7 — Build Vector Indexes
-rm -rf data/indexes/exams_faiss data/indexes/markschemes_faiss
-python -m asag_engine.index.build_indexes
-Verify:
+setx MINDOCR_HOME C:\path\to\mindocr
 
-ls data/indexes/markschemes_faiss
-ls data/indexes/exams_faiss
-You should see:
+```
 
-index.faiss
-index.pkl
-Step 8 — Start API
+---
+
+### 7. Setup PostgreSQL
+
+Create database:
+
+```
+
+CREATE DATABASE asag_db;
+
+```
+
+Set environment variable:
+
+Linux / Mac:
+
+```
+
+export DATABASE_URL=postgresql+psycopg2://postgres:password@localhost:5432/asag_db
+
+```
+
+Windows:
+
+```
+
+setx DATABASE_URL postgresql+psycopg2://postgres:password@localhost:5432/asag_db
+
+```
+
+---
+
+### 8. Run Application
+
+```
+
 python -m asag_engine.api.app
-Health check:
 
-curl http://127.0.0.1:8000/health
-Expected:
+```
 
-{"status":"ok"}
-Postman Test
-Endpoint
-POST
+Server runs at:
 
-http://127.0.0.1:8000/api/v1/grade
-Body (JSON)
-{
-  "question_text": "Solve for x: 2x + 3 = 11",
-  "student_answer": "2x = 8 so x = 4",
-  "max_marks": 2
-}
-Example Response
-{
-  "score_awarded": 2,
-  "max_score": 2,
-  "mark_points_awarded": [
-    {
-      "point": "Correct rearrangement",
-      "marks": 1,
-      "justification": "2x = 8"
-    },
-    {
-      "point": "Correct solution",
-      "marks": 1,
-      "justification": "x = 4"
-    }
-  ],
-  "missing_points": [],
-  "feedback_short": "Correct method and final answer.",
-  "sources": []
-}
-Memory Optimization
-If you see:
+```
 
-model requires more system memory than available
-Switch to smaller model:
+[http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-OLLAMA_CHAT_MODEL=phi3:mini
-Or reduce retrieval:
+```
 
-TOP_K_MARKSCHEME=2
-TOP_K_EXAMS=1
-Common Issues
-Issue	Solution
-Connection refused	Check OLLAMA_BASE_URL
-Missing index.faiss	Rebuild indexes
-ModuleNotFoundError	Run pip install -e .
-Not enough memory	Use smaller model
-Postman cannot connect	Use WSL IP instead of localhost
-Optional: MindSpore Research Folder
-mindspore_lab/ is intended for:
+---
 
-Fine-tuning experiments
+## Example CURL Requests
 
-Knowledge tracing models
+### Upload Resource
 
-Rubric learning systems
+```
 
-Custom grading classifiers
+curl -X POST [http://127.0.0.1:8000/api/v1/resources/upload](http://127.0.0.1:8000/api/v1/resources/upload) 
+-F "file=@data/raw/pdfs/test.pdf"
 
-Keep it in a separate virtual environment to avoid dependency conflicts.
+```
 
-Production Hardening Recommendations
-Add request logging
+---
 
-Add timeout protection
+### Search Resource
 
-Add input size limits
+```
 
-Add batch grading endpoint
+curl -X POST [http://127.0.0.1:8000/api/v1/resources/search](http://127.0.0.1:8000/api/v1/resources/search) 
+-H "Content-Type: application/json" 
+-d '{"query":"Quadratic formula","top_k":5}'
 
-Limit prompt size
+```
 
-Cap awarded marks to max_score
+---
 
-Use Gunicorn + Nginx for deployment
+### Tutor Question
 
-Add authentication if exposing publicly
+```
 
-Future Improvements
-Structured question parser (Q3(a)(ii))
+curl -X POST [http://127.0.0.1:8000/api/v1/tutor/student/S002](http://127.0.0.1:8000/api/v1/tutor/student/S002) 
+-H "Content-Type: application/json" 
+-d '{"question":"Explain how to solve quadratic equations"}'
 
-Rubric extraction from marking schemes
+```
 
-Multi-step reasoning grader
+---
 
-Batch grading API
+### Generate Assessment (Copilot)
 
-Student knowledge tracing integration
+```
 
-Dockerized deployment
+curl -X POST [http://127.0.0.1:8000/api/v1/copilot/generate](http://127.0.0.1:8000/api/v1/copilot/generate) 
+-H "Content-Type: application/json" 
+-d '{
+"task_type": "assessment",
+"topic": "Quadratic Equations",
+"grade_level": "Form 3",
+"instructions": "Include word problems and mark allocation."
+}'
 
-Summary
-This ASAG Engine provides:
+```
 
-Fully local AI grading
+---
 
-Marking-scheme-first RAG
+### Edit Generated Content
 
-Strict JSON output
+```
 
-Production-ready API
+curl -X POST [http://127.0.0.1:8000/api/v1/copilot/edit](http://127.0.0.1:8000/api/v1/copilot/edit) 
+-H "Content-Type: application/json" 
+-d '{
+"draft_id": "draft_001",
+"instructions": "Make it harder and add marking scheme."
+}'
 
-Postman testable
+```
 
-Memory optimized
+---
 
-MindSpore-ready research extension
+## Summary
+
+ASAG Engine is a production-ready AI academic backend that combines:
+
+- Retrieval-Augmented Generation (RAG)  
+- OCR-powered document intelligence  
+- Vector search with FAISS  
+- Structured academic metadata storage  
+- Teacher workflow automation  
+- Adaptive student support  
+
+It is designed to be modular, scalable, and deployable across schools and academic institutions.
+```
