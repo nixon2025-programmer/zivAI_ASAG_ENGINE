@@ -10,7 +10,7 @@ class CurriculumMapper:
     def map_question(self, question_text: str) -> Dict[str, Any]:
         """
         Uses semantic similarity to align a question
-        to the most relevant syllabus subtopic.
+        to the most relevant pdfs subtopic.
         """
 
         docs = self.vs.similarity_search(question_text, k=1)

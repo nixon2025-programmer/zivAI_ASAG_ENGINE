@@ -19,7 +19,7 @@ You are a curriculum alignment engine.
 
 You receive:
 1) A student question.
-2) Retrieved syllabus chunks.
+2) Retrieved pdfs chunks.
 
 Your task:
 - Identify the best matching topic_code
@@ -63,7 +63,7 @@ class SyllabusSemanticMapper:
 
     def map_question(self, question_text: str) -> Dict[str, Any]:
         """
-        Semantic search syllabus index,
+        Semantic search pdfs index,
         then use LLM to decide best curriculum alignment.
         """
 
@@ -75,7 +75,7 @@ class SyllabusSemanticMapper:
 Question:
 {question_text}
 
-Relevant syllabus sections:
+Relevant pdfs sections:
 {context}
 """
 
