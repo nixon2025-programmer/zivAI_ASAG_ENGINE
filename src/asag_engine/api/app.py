@@ -10,6 +10,8 @@ from asag_engine.api.analytics_routes import bp as analytics_bp
 from asag_engine.api.learning_plan_routes import bp_learning
 from asag_engine.api.tutor_routes import bp_tutor
 from asag_engine.api.resource_routes import bp_resources
+from asag_engine.api.copilot_routes import bp_copilot
+
 
 
 
@@ -34,6 +36,8 @@ def create_app() -> Flask:
 
     #mindocr endpoint
     app.register_blueprint(bp_resources)
+
+    app.register_blueprint(bp_copilot)
 
     return app
 
